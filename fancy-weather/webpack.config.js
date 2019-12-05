@@ -12,7 +12,7 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-      port: 9000,
+    port: 9000,
   },
   optimization: {
     minimizer: [
@@ -22,8 +22,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './src/index.html'
+      template: './src/index.html',
+      filename: 'index.html'
     }),
     new MiniCssExtractPlugin({
       filename: 'style.css'
@@ -38,6 +38,27 @@ module.exports = {
         loader: 'eslint-loader',
       },
       {
+        test: /\.(jpg|png|svg|gif)$/,
+        use: [{
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: './assets/img',
+              useRelativePath: true
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              },
+            },
+          },
+        ],
+      },
+      {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
@@ -48,7 +69,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        loader: 'babel-loader'
       }
     ]
   }
