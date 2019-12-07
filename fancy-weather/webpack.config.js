@@ -38,7 +38,7 @@ module.exports = {
         loader: 'eslint-loader',
       },
       {
-        test: /\.(jpg|png|svg|gif)$/,
+        test: /\.(svg|jpg|png|gif|svg)$/,
         use: [{
             loader: 'file-loader',
             options: {
@@ -52,11 +52,22 @@ module.exports = {
             options: {
               mozjpeg: {
                 progressive: true,
-                quality: 65
+                quality: 75
               },
             },
           },
         ],
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+             options: {
+               attrs: [':data-src']
+             }
+          }
+        ]
       },
       {
         test: /\.css$/,

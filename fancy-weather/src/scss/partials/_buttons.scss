@@ -1,0 +1,49 @@
+.refrash {
+  display: block;
+  background-color: #858C95;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 5px;
+  margin-right: 10px;
+  background-image: url(../assets/img/refrash-bg.png);
+  background-repeat: no-repeat;
+  padding-top: 5px;
+}
+
+.lang {
+  display: block;
+  background-color:#858C95;
+  width: 71px;
+  height: 44px;
+  border: 0;
+  border-radius: 5px;
+  margin-right: 10px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url(../assets/img/arrow-lang.svg);
+  background-position: right 14px top 19px, 0 0;
+  background-repeat: no-repeat;
+  font-size: 14px;
+  padding-left: 15px;
+}
+
+.fahrenheit {
+  display: block;
+  background-color: rgba(76, 82, 85, 0.4);
+  color: rgba(255, 255, 255, 0.4);
+  width: 44px;
+  height: 44px;
+  border-radius: 5px 0px 0px 5px;
+  border: 0;
+}
+
+.celsius{
+  display: block;
+  background-color: #858C95;
+  width: 44px;
+  height: 44px;
+  border-radius: 0px 5px 5px 0px;
+  border: 0;
+}

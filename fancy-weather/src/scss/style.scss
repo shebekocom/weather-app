@@ -4,9 +4,150 @@
 @import "partials/forms";
 @import "partials/typography";
 
+$color-main: #ffffff;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  background-image: url("../assets/img/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh
+}
+
+body {
+  background: linear-gradient(180deg, rgba(123, 127, 133, 0.73) 0%, rgba(17, 17, 46, 0.43) 100%);
+  color: $color-main;
+  height: 100vh
+}
+
+body,
+button,
+input,
+select,
+input::-webkit-input-placeholder {
+  font-family: $font-stack;
+  color: $color-main;
+}
+
+button,
+select {
+  font-weight: $bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.container {
+  width: 90%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-top: 5%;
+}
+
+.options {
+  display: flex;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 57px;
+}
+
+.location {
+  &--city {
+    font-size: 44px;
+    font-weight: $bold;
+  }
+
+  &--date {
+    font-size: 24px;
+    font-weight: $medium;
+  }
+}
+
+.weather {
+  display: flex;
+  position: relative;
+  font-weight: $bold;
+  width: 650px;
+
+  &--tempereture {
+    &-number {
+      font-size: 306px;
+    }
+
+    &-degree {
+      font-size: 100px;
+      line-height: 230px;
+      vertical-align: top;
+    }
+  }
+
+  &--icon {
+    width: 163px;
+    height: 103px;
+    position: absolute;
+    left: 300px;
+    z-index: -1;
+    background-image: url(../assets/img/weather-icon.svg);
+  }
+
+  &--rainfall {
+    font-size: 22px;
+    padding-top: 180px;
+  }
+}
+
+.weather_predict {
+  display: flex;
+  justify-content: space-around;
+
+  &--item {
+    width: 160px;
+
+    &-day {
+      font-size: 22px;
+      text-transform: uppercase;
+      font-weight: $bold;
+    }
+
+    &-degree {
+      font-size: 80px;
+      font-weight: $medium;
+    }
+  }
+}
+
+.map {
+  padding-top: 110px;
+}
+
+.coordinates {
+  font-size: 20px;
+  font-weight: $medium;
+  text-align: right;
+}
+
+.sun {
+  background-image: url(../assets/img/sun-icon.png);
+  background-repeat: no-repeat;
+  background-position: right 0px top 40px, 0 0;
+}
+
+.cloud{
+  background-image: url(../assets/img/clouds-icon.png);
+  background-repeat: no-repeat;
+  background-position: right 0px top 40px, 0 0;
+}
