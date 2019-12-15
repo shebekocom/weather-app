@@ -6,6 +6,8 @@ const seatchButton = document.querySelector('.search--button');
 const htmlDoc = document.querySelector('html');
 const refrashButton = document.querySelector('.refrash--icon');
 const serchCity = document.querySelector('.search--input');
+const citylocation = document.querySelector('.location--city');
+const weatherTemperature = document.querySelector('.weather--tempereture-number');
 
 // background imgage api function
 
@@ -31,9 +33,16 @@ async function getUserLocation() {
   return fetch(url).then(response => {
     return response.json();
   });
-  // document.querySelector('.location--city').textContent = `${data.city}, ${data.country}`;
-  // console.log(data);
-  // imgApi(data.city);
+}
+
+// get coordinates by city name api function
+
+async function getCoordinatesCity(city) {
+  const COORDINATES_API_TOKEN = '3468d757b0dd4fc19888429473458d0e';
+  const url = `https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${COORDINATES_API_TOKEN}`;
+  return fetch(url).then(response => {
+    return response.json();
+  });
 }
 
 async function getWeather(loc) {
@@ -45,12 +54,17 @@ async function getWeather(loc) {
 
 // function view fancy-weather on page
 
-function renderForecastInfo(results, currently, loc, city, country) {
+function renderForecastInfo(data, results, currently, loc, city, country) {
+  if (data) {
+    console.log('data: ', data.results[0].geometry.lat);
+    console.log('data: ', data.results[0].geometry.lng);
+  }
   console.log(currently);
   console.log(city);
   console.log(loc);
   console.log(country);
-  console.log(results);
+  citylocation.textContent = `${city}, ${country}`;
+  weatherTemperature.textContent = Math.round(currently.temperature);
   const randomImgItem = Math.floor(Math.random() * 10);
   htmlDoc.style.background = `url(${results[randomImgItem].urls.regular})`;
   htmlDoc.style.backgroundRepeat = 'no-repeat';
@@ -63,14 +77,16 @@ function renderForecastInfo(results, currently, loc, city, country) {
 async function init() {
   try {
     const { loc, city, country } = await getUserLocation();
+    let data = '';
     let searchText = city;
     if (serchCity.value) {
       searchText = serchCity.value;
-      console.log('serchCity.value: ', serchCity.value);
+      data = await getCoordinatesCity(searchText);
     }
     const { currently } = await getWeather(loc);
+    console.log(await getWeather(loc));
     const { results } = await imgApi(searchText);
-    renderForecastInfo(results, currently, loc, city, country);
+    renderForecastInfo(data, results, currently, loc, city, country);
   } catch (err) {
     console.log(err);
   }
