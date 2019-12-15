@@ -8,6 +8,8 @@ const refrashButton = document.querySelector('.refrash--icon');
 const serchCity = document.querySelector('.search--input');
 const citylocation = document.querySelector('.location--city');
 const weatherTemperature = document.querySelector('.weather--tempereture-number');
+const latitude = document.querySelector('.latitude');
+const longitude = document.querySelector('.longitude');
 
 // background imgage api function
 
@@ -59,8 +61,11 @@ function renderForecastInfo(data, results, currently, loc, city, country) {
   console.log(city);
   console.log(loc);
   console.log(country);
+  const locationCoordinates = loc.split(',');
   citylocation.textContent = `${city}, ${country}`;
   weatherTemperature.textContent = Math.round(currently.temperature);
+  latitude.textContent = `latitude: ${locationCoordinates[0]}`;
+  longitude.textContent = `longitude: ${locationCoordinates[1]}`;
   const randomImgItem = Math.floor(Math.random() * 10);
   htmlDoc.style.background = `url(${results[randomImgItem].urls.regular})`;
   htmlDoc.style.backgroundRepeat = 'no-repeat';
