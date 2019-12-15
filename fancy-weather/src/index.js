@@ -55,10 +55,6 @@ async function getWeather(loc) {
 // function view fancy-weather on page
 
 function renderForecastInfo(data, results, currently, loc, city, country) {
-  if (data) {
-    console.log('data: ', data.results[0].geometry.lat);
-    console.log('data: ', data.results[0].geometry.lng);
-  }
   console.log(currently);
   console.log(city);
   console.log(loc);
@@ -76,17 +72,22 @@ function renderForecastInfo(data, results, currently, loc, city, country) {
 
 async function init() {
   try {
-    const { loc, city, country } = await getUserLocation();
-    let data = '';
-    let searchText = city;
     if (serchCity.value) {
-      searchText = serchCity.value;
-      data = await getCoordinatesCity(searchText);
+      const city = serchCity.value;
+      const data = await getCoordinatesCity(city);
+      console.log('data: ', data);
+      const loc = `${data.results[0].geometry.lat}, ${data.results[0].geometry.lng}`;
+      const { currently } = await getWeather(loc);
+      const { results } = await imgApi(city);
+      const { country } = data.results[0].components;
+      renderForecastInfo(data, results, currently, loc, city, country);
+    } else {
+      const { loc, city, country } = await getUserLocation();
+      const { currently } = await getWeather(loc);
+      const { results } = await imgApi(city);
+      const data = '';
+      renderForecastInfo(data, results, currently, loc, city, country);
     }
-    const { currently } = await getWeather(loc);
-    console.log(await getWeather(loc));
-    const { results } = await imgApi(searchText);
-    renderForecastInfo(data, results, currently, loc, city, country);
   } catch (err) {
     console.log(err);
   }
