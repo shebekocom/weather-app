@@ -8,7 +8,8 @@ module.exports = {
         "airbnb/hooks",
         "airbnb/base",
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:prettier/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -23,7 +24,8 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier"
     ],
     "rules": {
         "linebreak-style": ["error", (process.platform === "win32" ? "windows" : "unix")],

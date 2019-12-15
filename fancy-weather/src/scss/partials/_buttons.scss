@@ -11,9 +11,19 @@
   padding-top: 5px;
 }
 
+.rotate_icon {
+    animation: rotating 1s infinite linear;
+
+    @keyframes rotating {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
 .lang {
   display: block;
-  background-color:#858C95;
+  background-color: #858C95;
   width: 71px;
   height: 44px;
   border: 0;
@@ -39,7 +49,7 @@
   border: 0;
 }
 
-.celsius{
+.celsius {
   display: block;
   background-color: #858C95;
   width: 44px;

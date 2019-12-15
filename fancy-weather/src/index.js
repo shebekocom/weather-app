@@ -2,45 +2,81 @@ import './css/style.css';
 import './scss/style.scss';
 import '@babel/polyfill';
 
-
 const seatchButton = document.querySelector('.search--button');
+const htmlDoc = document.querySelector('html');
+const refrashButton = document.querySelector('.refrash--icon');
+const serchCity = document.querySelector('.search--input');
 
 // background imgage api function
 
 async function imgApi(city) {
-  let searchText = city;
-  if (document.querySelector('.search--input').value) {
-    searchText = document.querySelector('.search--input').value;
-  }
+  // const IMG_API_TOKEN = '9b5364f53d2ad5197f5540e6977a8f97637d12e8e7038aa676f6bcce3894294d';
+  const IMG_API_TOKEN = '3352a6dc1dbc73fe6945c49da0928d22670e8f3f8bac7e4692760b14788b2477';
+  const url = `https://api.unsplash.com/search/photos?page=1&query=${city}&client_id=${IMG_API_TOKEN}`;
+  return fetch(url).then(response => {
+    return response.json();
+  });
+}
 
-  const url = `https://api.unsplash.com/photos/random?query=${searchText}&client_id=9b5364f53d2ad5197f5540e6977a8f97637d12e8e7038aa676f6bcce3894294d`;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    document.querySelector('html').style.background = `url(${data.urls.regular})`;
-    document.querySelector('html').style.backgroundRepeat = 'no-repeat';
-    document.querySelector('html').style.backgroundSize = 'cover';
-    document.querySelector('html').style.backgroundPosition = 'center center';
-  } catch (err) {
-    console.log(err);
-  }
+function refrash() {
+  refrashButton.classList.add('rotate_icon');
+  imgApi();
 }
 
 // get geo api function
 
-async function geoApi() {
-  const url = 'https://ipinfo.io?token=7cb6c170824055';
+async function getUserLocation() {
+  const LOCATION_API_TOKEN = '7cb6c170824055';
+  const url = `https://ipinfo.io?token=${LOCATION_API_TOKEN}`;
+  return fetch(url).then(response => {
+    return response.json();
+  });
+  // document.querySelector('.location--city').textContent = `${data.city}, ${data.country}`;
+  // console.log(data);
+  // imgApi(data.city);
+}
+
+async function getWeather(loc) {
+  const WHETHER_API_TOKEN = '641973d501e5df987672229f270389d8';
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  const url = `https://api.darksky.net/forecast/${WHETHER_API_TOKEN}/${loc}`;
+  return fetch(proxyUrl + url).then(response => response.json());
+}
+
+// function view fancy-weather on page
+
+function renderForecastInfo(results, currently, loc, city, country) {
+  console.log(currently);
+  console.log(city);
+  console.log(loc);
+  console.log(country);
+  console.log(results);
+  const randomImgItem = Math.floor(Math.random() * 10);
+  htmlDoc.style.background = `url(${results[randomImgItem].urls.regular})`;
+  htmlDoc.style.backgroundRepeat = 'no-repeat';
+  htmlDoc.style.backgroundSize = 'cover';
+  htmlDoc.style.backgroundPosition = 'center center';
+}
+
+// start api functions
+
+async function init() {
   try {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    document.querySelector('.location--city').textContent = `${data.city}, ${data.country}`;
-    imgApi(data.city);
+    const { loc, city, country } = await getUserLocation();
+    let searchText = city;
+    if (serchCity.value) {
+      searchText = serchCity.value;
+      console.log('serchCity.value: ', serchCity.value);
+    }
+    const { currently } = await getWeather(loc);
+    const { results } = await imgApi(searchText);
+    renderForecastInfo(results, currently, loc, city, country);
   } catch (err) {
     console.log(err);
   }
 }
 
-geoApi();
+init();
 
-seatchButton.addEventListener('click', () => imgApi());
+seatchButton.addEventListener('click', () => init());
+refrashButton.addEventListener('click', () => refrash());
