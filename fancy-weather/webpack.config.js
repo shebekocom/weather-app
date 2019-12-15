@@ -8,17 +8,14 @@ module.exports = {
   entry: ['@babel/polyfill', './src/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     port: 9000,
   },
   optimization: {
-    minimizer: [
-      new UglifyJsPlugin({}),
-      new OptimizeCSSAssetsPlugin({})
-    ],
+    minimizer: [new UglifyJsPlugin({}), new OptimizeCSSAssetsPlugin({})],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -26,11 +23,10 @@ module.exports = {
       filename: 'index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: 'style.css'
+      filename: 'style.css',
     })
   ],
   module: {
-
     rules: [{
         enforce: 'pre',
         test: /\.js$/,
@@ -44,7 +40,7 @@ module.exports = {
             options: {
               name: '[name].[ext]',
               outputPath: './assets/img',
-              useRelativePath: true
+              useRelativePath: true,
             },
           },
           {
@@ -52,7 +48,7 @@ module.exports = {
             options: {
               mozjpeg: {
                 progressive: true,
-                quality: 75
+                quality: 75,
               },
             },
           },
@@ -63,11 +59,9 @@ module.exports = {
         use: [
           {
             loader: 'html-loader',
-             options: {
-               attrs: [':data-src']
-             }
+            options: { attrs: [':data-src'] },
           }
-        ]
+        ],
       },
       {
         test: /\.css$/,
@@ -80,8 +74,8 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       }
-    ]
-  }
+    ],
+  },
 };

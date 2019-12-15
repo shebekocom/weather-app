@@ -1,6 +1,10 @@
 import './css/style.css';
 import './scss/style.scss';
 import '@babel/polyfill';
+import getUserLocation from './modules/getuserlocation'; // get geo api function
+import imgApi from './modules/imgapi'; // background imgage api function
+import getCoordinatesCity from './modules/getcoordinatescity'; // get coordinates by city name api function
+import getWeather from './modules/getweather'; // get weather api function
 
 const seatchButton = document.querySelector('.search--button');
 const htmlDoc = document.querySelector('html');
@@ -10,48 +14,11 @@ const citylocation = document.querySelector('.location--city');
 const weatherTemperature = document.querySelector('.weather--tempereture-number');
 const latitude = document.querySelector('.latitude');
 const longitude = document.querySelector('.longitude');
-
-// background imgage api function
-
-async function imgApi(city) {
-  // const IMG_API_TOKEN = '9b5364f53d2ad5197f5540e6977a8f97637d12e8e7038aa676f6bcce3894294d';
-  const IMG_API_TOKEN = '3352a6dc1dbc73fe6945c49da0928d22670e8f3f8bac7e4692760b14788b2477';
-  const url = `https://api.unsplash.com/search/photos?page=1&query=${city}&client_id=${IMG_API_TOKEN}`;
-  return fetch(url).then(response => {
-    return response.json();
-  });
-}
+const celsiusButton = document.querySelector('.celsius');
 
 function refrash() {
   refrashButton.classList.add('rotate_icon');
   imgApi();
-}
-
-// get geo api function
-
-async function getUserLocation() {
-  const LOCATION_API_TOKEN = '7cb6c170824055';
-  const url = `https://ipinfo.io?token=${LOCATION_API_TOKEN}`;
-  return fetch(url).then(response => {
-    return response.json();
-  });
-}
-
-// get coordinates by city name api function
-
-async function getCoordinatesCity(city) {
-  const COORDINATES_API_TOKEN = '3468d757b0dd4fc19888429473458d0e';
-  const url = `https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${COORDINATES_API_TOKEN}`;
-  return fetch(url).then(response => {
-    return response.json();
-  });
-}
-
-async function getWeather(loc) {
-  const WHETHER_API_TOKEN = '641973d501e5df987672229f270389d8';
-  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-  const url = `https://api.darksky.net/forecast/${WHETHER_API_TOKEN}/${loc}`;
-  return fetch(proxyUrl + url).then(response => response.json());
 }
 
 // function view fancy-weather on page
@@ -102,3 +69,6 @@ init();
 
 seatchButton.addEventListener('click', () => init());
 refrashButton.addEventListener('click', () => refrash());
+celsiusButton.addEventListener('click', () => {
+  weatherTemperature.textContent = Math.round((Number(weatherTemperature.outerText) - 32) / 1.8);
+});

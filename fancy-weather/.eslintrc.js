@@ -38,6 +38,7 @@ module.exports = {
         "arrow-parens": "off",
     },
         "settings": {
+           
             "react": {
                 "createClass": "createReactClass",
                 "pragma": "React", 

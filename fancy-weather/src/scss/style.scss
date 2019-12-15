@@ -3,8 +3,9 @@
 @import "partials/buttons";
 @import "partials/forms";
 @import "partials/typography";
+@import "partials/variables";
 
-$color-main: #ffffff;
+
 
 * {
   margin: 0;
@@ -70,6 +71,7 @@ select {
   &--city {
     font-size: 44px;
     font-weight: $bold;
+    text-transform: capitalize;
   }
 
   &--date {
