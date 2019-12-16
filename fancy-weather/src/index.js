@@ -22,6 +22,7 @@ const humidityDoc = document.querySelector('.weather--rainfall-item:nth-child(4)
 const latitude = document.querySelector('.latitude');
 const longitude = document.querySelector('.longitude');
 const celsiusButton = document.querySelector('.celsius');
+const dateLocationDoc = document.querySelector('.location--date');
 
 function refrash() {
   refrashButton.classList.add('rotate_icon');
@@ -30,10 +31,17 @@ function refrash() {
 
 // function view fancy-weather on page
 
-function renderForecastInfo(data, results, currently, loc, city, country) {
+function renderForecastInfo(data, results, currently, offset, loc, city, country) {
   renderImg(results, htmlDoc);
   const likeTemperatureСelsius = Math.round((Number(currently.apparentTemperature) - 32) / 1.8);
   const temperatureСelsius = Math.round((Number(currently.temperature) - 32) / 1.8);
+  const dateLocation = new Date(currently.time * 1000 + offset * 3600 * 1000)
+    .toISOString()
+    .substr(0, 16)
+    .split('T')
+    .reverse()
+    .join(', ');
+  dateLocationDoc.textContent = dateLocation;
   precipTypeDoc.textContent = currently.precipType;
   feellikeDoc.textContent = `Feels like: ${likeTemperatureСelsius} °`;
   windSpeedDoc.textContent = `Wind: ${Math.round(currently.windSpeed)} m/s`;
@@ -52,18 +60,18 @@ async function init() {
       const city = serchCity.value;
       const data = await getCoordinatesCity(city);
       const loc = `${data.results[0].geometry.lat}, ${data.results[0].geometry.lng}`;
-      const { currently } = await getWeather(loc);
+      const { currently, offset } = await getWeather(loc);
       console.log('await getWeather(loc): ', await getWeather(loc));
       const { results } = await getImg(city);
       const { country } = data.results[0].components;
-      renderForecastInfo(data, results, currently, loc, city, country);
+      renderForecastInfo(data, results, currently, offset, loc, city, country);
     } else {
       const { loc, city, country } = await getUserLocation();
-      const { currently } = await getWeather(loc);
+      const { currently, offset } = await getWeather(loc);
       console.log('await getWeather(loc): ', await getWeather(loc));
       const { results } = await getImg(city);
       const data = '';
-      renderForecastInfo(data, results, currently, loc, city, country);
+      renderForecastInfo(data, results, currently, offset, loc, city, country);
     }
   } catch (err) {
     console.log(err);
