@@ -2,11 +2,12 @@ import './css/style.css';
 import './scss/style.scss';
 import '@babel/polyfill';
 import getUserLocation from './modules/getuserlocation'; // get geo api function
-import imgApi from './modules/imgapi'; // background imgage api function
+import getImg from './modules/getimg'; // background imgage api function
 import getCoordinatesCity from './modules/getcoordinatescity'; // get coordinates by city name api function
 import getWeather from './modules/getweather'; // get weather api function
-import imgRender from './modules/imgrender'; // change background img render
-import getMap from './modules/getmap'; // import map module
+import renderImg from './modules/renderimg'; // change background img render
+import renderMap from './modules/rendermap'; // import map module
+import renderCoodinates from './modules/rendercoodinates'; // import map module
 
 const seatchButton = document.querySelector('.search--button');
 const htmlDoc = document.querySelector('html');
@@ -20,19 +21,17 @@ const celsiusButton = document.querySelector('.celsius');
 
 function refrash() {
   refrashButton.classList.add('rotate_icon');
-  imgApi();
+  getImg();
 }
 
 // function view fancy-weather on page
 
 function renderForecastInfo(data, results, currently, loc, city, country) {
+  renderImg(results, htmlDoc);
   citylocation.textContent = `${city}, ${country}`;
   weatherTemperature.textContent = Math.round(currently.temperature);
-  const locationCoordinates = loc.split(',');
-  latitude.textContent = `latitude: ${locationCoordinates[0]}`;
-  longitude.textContent = `longitude: ${locationCoordinates[1]}`;
-  imgRender(results, htmlDoc);
-  getMap(locationCoordinates[1], locationCoordinates[0]);
+  renderCoodinates(loc, latitude, longitude);
+  renderMap(locationCoordinates[1], locationCoordinates[0]);
 }
 // start api functions
 
@@ -44,13 +43,13 @@ async function init() {
       console.log('data: ', data);
       const loc = `${data.results[0].geometry.lat}, ${data.results[0].geometry.lng}`;
       const { currently } = await getWeather(loc);
-      const { results } = await imgApi(city);
+      const { results } = await getImg(city);
       const { country } = data.results[0].components;
       renderForecastInfo(data, results, currently, loc, city, country);
     } else {
       const { loc, city, country } = await getUserLocation();
       const { currently } = await getWeather(loc);
-      const { results } = await imgApi(city);
+      const { results } = await getImg(city);
       const data = '';
       renderForecastInfo(data, results, currently, loc, city, country);
     }
