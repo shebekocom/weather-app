@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>fancy-weather</title>
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.js"></script>
+<link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -67,13 +69,11 @@
                 </div>
             </div>
             <div class="wrapper">
-                <div class="map">
-                    <img src="assets/img/map.png" data-src="assets/img/map.png">
-                </div>
-                <div class="coordinates">
-                    <p class="latitude">Latitude: 53°54'</p>
-                    <p class="longitude">Longitude: 27°34'</p>
-                </div>
+                    <div class="map" id="map"></div>
+                    <div class="coordinates">
+                            <p class="latitude">Latitude: 53°54'</p>
+                            <p class="longitude">Longitude: 27°34'</p>
+                        </div>                
             </div>
         </main>
     </div>

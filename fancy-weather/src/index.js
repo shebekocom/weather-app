@@ -5,6 +5,8 @@ import getUserLocation from './modules/getuserlocation'; // get geo api function
 import imgApi from './modules/imgapi'; // background imgage api function
 import getCoordinatesCity from './modules/getcoordinatescity'; // get coordinates by city name api function
 import getWeather from './modules/getweather'; // get weather api function
+import imgRender from './modules/imgrender'; // change background img render
+import getMap from './modules/getmap'; // import map module
 
 const seatchButton = document.querySelector('.search--button');
 const htmlDoc = document.querySelector('html');
@@ -24,22 +26,14 @@ function refrash() {
 // function view fancy-weather on page
 
 function renderForecastInfo(data, results, currently, loc, city, country) {
-  console.log(currently);
-  console.log(city);
-  console.log(loc);
-  console.log(country);
-  const locationCoordinates = loc.split(',');
   citylocation.textContent = `${city}, ${country}`;
   weatherTemperature.textContent = Math.round(currently.temperature);
+  const locationCoordinates = loc.split(',');
   latitude.textContent = `latitude: ${locationCoordinates[0]}`;
   longitude.textContent = `longitude: ${locationCoordinates[1]}`;
-  const randomImgItem = Math.floor(Math.random() * 10);
-  htmlDoc.style.background = `url(${results[randomImgItem].urls.regular})`;
-  htmlDoc.style.backgroundRepeat = 'no-repeat';
-  htmlDoc.style.backgroundSize = 'cover';
-  htmlDoc.style.backgroundPosition = 'center center';
+  imgRender(results, htmlDoc);
+  getMap(locationCoordinates[1], locationCoordinates[0]);
 }
-
 // start api functions
 
 async function init() {
