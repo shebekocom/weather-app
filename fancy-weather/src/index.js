@@ -15,6 +15,10 @@ const refrashButton = document.querySelector('.refrash--icon');
 const serchCity = document.querySelector('.search--input');
 const citylocation = document.querySelector('.location--city');
 const weatherTemperature = document.querySelector('.weather--tempereture-number');
+const precipTypeDoc = document.querySelector('.weather--rainfall-item:nth-child(1)');
+const feellikeDoc = document.querySelector('.weather--rainfall-item:nth-child(2)');
+const windSpeedDoc = document.querySelector('.weather--rainfall-item:nth-child(3)');
+const humidityDoc = document.querySelector('.weather--rainfall-item:nth-child(4)');
 const latitude = document.querySelector('.latitude');
 const longitude = document.querySelector('.longitude');
 const celsiusButton = document.querySelector('.celsius');
@@ -28,11 +32,18 @@ function refrash() {
 
 function renderForecastInfo(data, results, currently, loc, city, country) {
   renderImg(results, htmlDoc);
+  const likeTemperatureСelsius = Math.round((Number(currently.apparentTemperature) - 32) / 1.8);
+  const temperatureСelsius = Math.round((Number(currently.temperature) - 32) / 1.8);
+  precipTypeDoc.textContent = currently.precipType;
+  feellikeDoc.textContent = `Feels like: ${likeTemperatureСelsius} °`;
+  windSpeedDoc.textContent = `Wind: ${Math.round(currently.windSpeed)} m/s`;
+  humidityDoc.textContent = `Humidity: ${currently.humidity * 100} %`;
   citylocation.textContent = `${city}, ${country}`;
-  weatherTemperature.textContent = Math.round(currently.temperature);
+  weatherTemperature.textContent = temperatureСelsius;
   renderCoodinates(loc, latitude, longitude);
   renderMap(loc);
 }
+
 // start api functions
 
 async function init() {
@@ -40,15 +51,16 @@ async function init() {
     if (serchCity.value) {
       const city = serchCity.value;
       const data = await getCoordinatesCity(city);
-      console.log('data: ', data);
       const loc = `${data.results[0].geometry.lat}, ${data.results[0].geometry.lng}`;
       const { currently } = await getWeather(loc);
+      console.log('await getWeather(loc): ', await getWeather(loc));
       const { results } = await getImg(city);
       const { country } = data.results[0].components;
       renderForecastInfo(data, results, currently, loc, city, country);
     } else {
       const { loc, city, country } = await getUserLocation();
       const { currently } = await getWeather(loc);
+      console.log('await getWeather(loc): ', await getWeather(loc));
       const { results } = await getImg(city);
       const data = '';
       renderForecastInfo(data, results, currently, loc, city, country);
@@ -62,6 +74,4 @@ init();
 
 seatchButton.addEventListener('click', () => init());
 refrashButton.addEventListener('click', () => refrash());
-celsiusButton.addEventListener('click', () => {
-  weatherTemperature.textContent = Math.round((Number(weatherTemperature.outerText) - 32) / 1.8);
-});
+celsiusButton.addEventListener('click', () => {});
