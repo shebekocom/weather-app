@@ -31,7 +31,7 @@ function renderForecastInfo(data, results, currently, loc, city, country) {
   citylocation.textContent = `${city}, ${country}`;
   weatherTemperature.textContent = Math.round(currently.temperature);
   renderCoodinates(loc, latitude, longitude);
-  renderMap(locationCoordinates[1], locationCoordinates[0]);
+  renderMap(loc);
 }
 // start api functions
 
