@@ -1,6 +1,7 @@
 import './css/style.css';
 import './scss/style.scss';
 import '@babel/polyfill';
+import './modules/renderhtml'; // render html
 import getUserLocation from './modules/getuserlocation'; // get geo api function
 import getImg from './modules/getimg'; // background imgage api function
 import getCoordinatesCity from './modules/getcoordinatescity'; // get coordinates by city name api function
@@ -31,7 +32,8 @@ function refrash() {
 
 // function view fancy-weather on page
 
-function renderForecastInfo(data, results, currently, offset, loc, city, country) {
+function renderForecastInfo(data, results, currently, offset, daily, loc, city, country) {
+  console.log('daily: ', new Date(daily.data[2].time * 1000).getDay());
   renderImg(results, htmlDoc);
   const likeTemperatureСelsius = Math.round((Number(currently.apparentTemperature) - 32) / 1.8);
   const temperatureСelsius = Math.round((Number(currently.temperature) - 32) / 1.8);
@@ -60,18 +62,17 @@ async function init() {
       const city = serchCity.value;
       const data = await getCoordinatesCity(city);
       const loc = `${data.results[0].geometry.lat}, ${data.results[0].geometry.lng}`;
-      const { currently, offset } = await getWeather(loc);
+      const { currently, offset, daily } = await getWeather(loc);
       console.log('await getWeather(loc): ', await getWeather(loc));
       const { results } = await getImg(city);
       const { country } = data.results[0].components;
-      renderForecastInfo(data, results, currently, offset, loc, city, country);
+      renderForecastInfo(data, results, currently, offset, daily, loc, city, country);
     } else {
       const { loc, city, country } = await getUserLocation();
-      const { currently, offset } = await getWeather(loc);
-      console.log('await getWeather(loc): ', await getWeather(loc));
+      const { currently, offset, daily } = await getWeather(loc);
       const { results } = await getImg(city);
       const data = '';
-      renderForecastInfo(data, results, currently, offset, loc, city, country);
+      renderForecastInfo(data, results, currently, offset, daily, loc, city, country);
     }
   } catch (err) {
     console.log(err);
