@@ -24,6 +24,8 @@ const latitude = document.querySelector('.latitude');
 const longitude = document.querySelector('.longitude');
 const celsiusButton = document.querySelector('.celsius');
 const dateLocationDoc = document.querySelector('.location--date');
+const firstDay = document.querySelector('.weather_predict--item:nth-child(1) > .weather_predict--item-day');
+console.log('firstDay: ', firstDay);
 
 function refrash() {
   refrashButton.classList.add('rotate_icon');
@@ -33,7 +35,8 @@ function refrash() {
 // function view fancy-weather on page
 
 function renderForecastInfo(data, results, currently, offset, daily, loc, city, country) {
-  console.log('daily: ', new Date(daily.data[2].time * 1000).getDay());
+  console.log('daily: ', daily);
+  console.log('currently: ', currently);
   renderImg(results, htmlDoc);
   const likeTemperatureСelsius = Math.round((Number(currently.apparentTemperature) - 32) / 1.8);
   const temperatureСelsius = Math.round((Number(currently.temperature) - 32) / 1.8);
