@@ -9,6 +9,7 @@ import getWeather from './modules/getweather'; // get weather api function
 import renderImg from './modules/renderimg'; // change background img render
 import renderMap from './modules/rendermap'; // import map module
 import renderCoodinates from './modules/rendercoodinates'; // import map module
+import renderPredictWeather from './modules/renderpredictweather'; // import predict weather
 
 const seatchButton = document.querySelector('.search--button');
 const htmlDoc = document.querySelector('html');
@@ -24,19 +25,19 @@ const latitude = document.querySelector('.latitude');
 const longitude = document.querySelector('.longitude');
 const celsiusButton = document.querySelector('.celsius');
 const dateLocationDoc = document.querySelector('.location--date');
-const firstDay = document.querySelector('.weather_predict--item:nth-child(1) > .weather_predict--item-day');
-console.log('firstDay: ', firstDay);
+const dayWeather = document.querySelectorAll('.weather_predict--item-day');
+const predictDayWeather = document.querySelectorAll('.weather_predict--item-degree');
 
 function refrash() {
   refrashButton.classList.add('rotate_icon');
   getImg();
 }
 
+const daysWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+
 // function view fancy-weather on page
 
 function renderForecastInfo(data, results, currently, offset, daily, loc, city, country) {
-  console.log('daily: ', daily);
-  console.log('currently: ', currently);
   renderImg(results, htmlDoc);
   const likeTemperatureСelsius = Math.round((Number(currently.apparentTemperature) - 32) / 1.8);
   const temperatureСelsius = Math.round((Number(currently.temperature) - 32) / 1.8);
@@ -53,6 +54,7 @@ function renderForecastInfo(data, results, currently, offset, daily, loc, city, 
   humidityDoc.textContent = `Humidity: ${currently.humidity * 100} %`;
   citylocation.textContent = `${city}, ${country}`;
   weatherTemperature.textContent = temperatureСelsius;
+  renderPredictWeather(daily, offset, dayWeather, predictDayWeather, daysWeek);
   renderCoodinates(loc, latitude, longitude);
   renderMap(loc);
 }
