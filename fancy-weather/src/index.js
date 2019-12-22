@@ -2,14 +2,14 @@ import './css/style.css';
 import './scss/style.scss';
 import '@babel/polyfill';
 import './modules/renderhtml'; // render html
-import getUserLocation from './modules/getuserlocation'; // get geo api function
-import getImg from './modules/getimg'; // background imgage api function
-import getCoordinatesCity from './modules/getcoordinatescity'; // get coordinates by city name api function
-import getWeather from './modules/getweather'; // get weather api function
-import renderImg from './modules/renderimg'; // change background img render
-import renderMap from './modules/rendermap'; // import map module
-import renderCoodinates from './modules/rendercoodinates'; // import map module
-import renderPredictWeather from './modules/renderpredictweather'; // import predict weather
+import getUserLocation from './modules/getUserLocation'; // get geo api function
+import getImg from './modules/getImg'; // background imgage api function
+import getCoordinatesCity from './modules/getCoordinatesCity'; // get coordinates by city name api function
+import getWeather from './modules/getWeather'; // get weather api function
+import renderImg from './modules/renderImg'; // change background img render
+import renderMap from './modules/renderMap'; // import map module
+import renderCoodinates from './modules/renderCoodinates'; // import map module
+import renderPredictWeather from './modules/renderPredictWeather'; // import predict weather
 
 const seatchButton = document.querySelector('.search--button');
 const htmlDoc = document.querySelector('html');
@@ -33,7 +33,7 @@ function refrash() {
   getImg();
 }
 
-const daysWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+const daysWeek = ['sunday', 'monday', 'tuesday ', 'wednesday ', 'thursday', 'friday', 'saturday'];
 
 // function view fancy-weather on page
 

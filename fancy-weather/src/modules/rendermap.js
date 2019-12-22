@@ -1,5 +1,6 @@
 /* eslint-disable prefer-const */
 /* eslint-disable no-undef */
+
 export default function renderMap(loc) {
   const locationCoordinates = loc.split(',');
   const lat = locationCoordinates[1];
