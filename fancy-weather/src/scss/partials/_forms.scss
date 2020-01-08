@@ -1,0 +1,36 @@
+
+.search{
+  display: flex;
+  position: relative;
+  &--input {
+    background: rgba(76, 82, 85, 0.4);
+    width: 277px;
+    height: 44px;
+    border: 1px solid rgba(228, 227, 227, 0.2);
+    border-radius: 5px 0px 0px 5px;
+    color: #ffffff;
+    padding-left: 10px;
+
+    &::-webkit-input-placeholder {
+      color: #ffffff;
+      font-size: 14px;
+    }
+    &:focus::-webkit-input-placeholder {
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+  }
+  &--mic{
+    position: absolute;
+    top: 12px;
+    left: 250px;
+  }
+  &--button{
+    width: 101px;
+    font-size: 14px;
+    height: 44px;
+    background-color: #838B95;
+    border: 0;
+    color: #ffffff;
+    border-radius: 0px 5px 5px 0px;
+  }
+}
