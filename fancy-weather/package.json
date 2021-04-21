@@ -53,6 +53,6 @@
     "@babel/polyfill": "^7.7.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "fibers": "^4.0.2",
-    "sockjs": "^0.3.19"
+    "sockjs": "^0.3.20"
   }
 }
